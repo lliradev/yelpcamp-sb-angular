@@ -1,0 +1,52 @@
+<div class="card mt-3">
+  <div class="card-header">Nuevo cliente</div>
+  <form [formGroup]="clienteForm" (ngSubmit)="saveOrUpdate()">
+    <div class="card-body">
+      <div class="form-group row has-danger">
+        <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="nombre" [(ngModel)]="cliente.nombre" required>
+          <div class="text-danger"
+            *ngIf="formControls.nombre.invalid && (formControls.nombre.dirty || formControls.nombre.touched)">
+            <div *ngIf="formControls.nombre.errors.required">
+              El nombre es requerido.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" formControlName="apellido" [(ngModel)]="cliente.apellido">
+          <div class="text-danger"
+            *ngIf="formControls.apellido.invalid && (formControls.apellido.dirty || formControls.apellido.touched)">
+            <div *ngIf="formControls.apellido.errors.required">
+              El apellido es requerido.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="email" class="col-form-label col-sm-2">Correo electrónico</label>
+        <div class="col-sm-6">
+          <input type="email" class="form-control" formControlName="email" [(ngModel)]="cliente.email">
+          <div class="text-danger"
+            *ngIf="formControls.email.invalid && (formControls.email.dirty || formControls.email.touched)">
+            <div *ngIf="formControls.email.errors.required">
+              El correo electrónico es requerido.
+            </div>
+            <div *ngIf="formControls.email.errors.pattern">
+              Correo electrónico inválido.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary mr-2">Guardar</button>
+      <a routerLink="/clientes" class="btn btn-danger">Cancelar</a>
+    </div>
+  </form>
+
+  <pre>{{ cliente | json }}</pre>
+</div>
