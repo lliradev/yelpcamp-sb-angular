@@ -1,5 +1,6 @@
 /**
  * Clase para validar los campos del formulario
+ *
  * @author Luis Lira <llira34>
  * @version 1.0
  */

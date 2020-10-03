@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-
-declare var swal: any;
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Injectable({ providedIn: 'root' })
 export class SwalService {
   /**
    * Mostrar alerta de éxito
+   *
    * @param title título de la alerta
    * @param message mensaje personalizado de la alerta
    */
   public success(title: string, message: string) {
-    swal(title, message, 'success');
+    Swal.fire(title, message, 'success');
   }
 
   public info() {}
@@ -21,16 +21,23 @@ export class SwalService {
 
   /**
    * Método para confirmar la eliminación de un registro
+   *
    * @param title título de la alerta
    * @param message mensaje personalizado de la alerta
    */
-  public confirm(title: string, message: string): Promise<boolean> {
-    return swal({
+  public confirm(
+    title: string,
+    message: string
+  ): Promise<SweetAlertResult<boolean>> {
+    return Swal.fire({
       title,
       text: message,
       icon: 'warning',
-      buttons: ['Cancelar', 'Aceptar'],
-      dangerMode: true,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
     });
   }
 }

@@ -34,9 +34,9 @@ export class ClienteListComponent implements OnInit {
   public async deleteCliente(cliente: ClienteModel) {
     const result = await this.swalService.confirm(
       '¿Está seguro que desea eliminar el registro?',
-      `Está acción eliminara al cliente ${cliente.nombre} ${cliente.apellido}`
+      `Está acción eliminara al cliente ${cliente.nombre.toUpperCase()} ${cliente.apellido.toUpperCase()}`
     );
-    if (result) {
+    if (result.isConfirmed) {
       this.clienteService.delete(cliente.id).subscribe(() => {
         this.getClientes();
         this.swalService.success(
