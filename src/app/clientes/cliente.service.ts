@@ -34,7 +34,7 @@ export class ClienteService {
    *
    * @param cliente objeto que se va a crear
    */
-  public create(cliente: ClienteModel): Observable<ClienteModel> {
+  public insert(cliente: ClienteModel): Observable<ClienteModel> {
     return this.http.post<ClienteModel>(this.url, cliente);
   }
 

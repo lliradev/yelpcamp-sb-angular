@@ -2,34 +2,36 @@
   <div class="card-header">Lista de clientes</div>
   <div class="card-body">
     <a routerLink="/clientes/create" class="btn btn-primary mb-3 float-right">Nuevo</a>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Correo electrónico</th>
-          <th>Fecha de creación</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let cliente of clientes">
-          <td>{{ cliente.id }}</td>
-          <td>{{ cliente.nombre }}</td>
-          <td>{{ cliente.apellido }}</td>
-          <td>{{ cliente.email }}</td>
-          <td>{{ cliente.createdAt }}</td>
-          <td>
-            <a [routerLink]="[ '/clientes/edit', cliente.id ]" class="btn btn-primary mr-2">
-              <i class="far fa-edit"></i>
-            </a>
-            <a href="javascript: void(0)" (click)="deleteCliente(cliente)" class="btn btn-danger">
-              <i class="fas fa-trash"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo electrónico</th>
+            <th>Fecha de creación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cliente of clientes">
+            <td>{{ cliente.id }}</td>
+            <td>{{ cliente.nombre }}</td>
+            <td>{{ cliente.apellido }}</td>
+            <td>{{ cliente.email }}</td>
+            <td>{{ cliente.createdAt }}</td>
+            <td>
+              <a [routerLink]="[ '/clientes/edit', cliente.id ]" class="btn btn-primary mr-2">
+                <i class="far fa-edit"></i>
+              </a>
+              <a href="javascript: void(0)" (click)="deleteCliente(cliente)" class="btn btn-danger">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

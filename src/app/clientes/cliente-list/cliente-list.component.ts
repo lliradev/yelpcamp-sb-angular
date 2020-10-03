@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClienteService } from '../cliente.service';
 import { Title } from '@angular/platform-browser';
 import { ClienteModel } from '../cliente.model';
-declare var swal: any;
+import { SwalService } from 'src/app/shared/service/swal.service';
 
 @Component({
   selector: 'app-cliente-list',
@@ -10,11 +10,12 @@ declare var swal: any;
   styleUrls: ['./cliente-list.component.css'],
 })
 export class ClienteListComponent implements OnInit {
-  clientes: ClienteModel[];
+  public clientes: ClienteModel[];
 
   constructor(
     private titleService: Title,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private swalService: SwalService
   ) {
     titleService.setTitle('Lista de Clientes');
   }
@@ -30,24 +31,19 @@ export class ClienteListComponent implements OnInit {
     );
   }
 
-  public deleteCliente(cliente: ClienteModel) {
-    swal({
-      title: '¿Está seguro que desea eliminar el registro?',
-      text: `Está acción eliminara al cliente ${cliente.nombre} ${cliente.apellido}`,
-      icon: 'warning',
-      buttons: ['Cancelar', 'Aceptar'],
-      dangerMode: true,
-    }).then((result: boolean) => {
-      if (result) {
-        this.clienteService.delete(cliente.id).subscribe((res) => {
-          this.getClientes();
-          swal(
-            'Cliente eliminado',
-            'El cliente se eliminó con éxito.',
-            'success'
-          );
-        });
-      }
-    });
+  public async deleteCliente(cliente: ClienteModel) {
+    const result = await this.swalService.confirm(
+      '¿Está seguro que desea eliminar el registro?',
+      `Está acción eliminara al cliente ${cliente.nombre} ${cliente.apellido}`
+    );
+    if (result) {
+      this.clienteService.delete(cliente.id).subscribe(() => {
+        this.getClientes();
+        this.swalService.success(
+          'Cliente eliminado',
+          'El cliente se eliminó con éxito.'
+        );
+      });
+    }
   }
 }

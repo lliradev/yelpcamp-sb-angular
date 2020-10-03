@@ -1,7 +1,7 @@
 /**
  * Constantes personalizadas para las expresiones regulares
  *
- * @author llira
+ * @author Luis Lira <llira34>
  * @version 1.0
  */
 export default class CustomPatternRegex {
