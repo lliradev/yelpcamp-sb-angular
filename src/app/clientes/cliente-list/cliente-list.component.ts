@@ -7,12 +7,15 @@ declare var swal: any;
 @Component({
   selector: 'app-cliente-list',
   templateUrl: './cliente-list.component.html',
-  styleUrls: ['./cliente-list.component.css']
+  styleUrls: ['./cliente-list.component.css'],
 })
 export class ClienteListComponent implements OnInit {
   clientes: ClienteModel[];
 
-  constructor(private titleService: Title, private clienteService: ClienteService) {
+  constructor(
+    private titleService: Title,
+    private clienteService: ClienteService
+  ) {
     titleService.setTitle('Lista de Clientes');
   }
 
@@ -21,27 +24,30 @@ export class ClienteListComponent implements OnInit {
   }
 
   private getClientes() {
-    this.clienteService.findAll()
-      .subscribe(res => {
-        this.clientes = res
-      }, err => console.error(err));
+    this.clienteService.findAll().subscribe(
+      (res) => (this.clientes = res),
+      (err) => console.error(err)
+    );
   }
 
   public deleteCliente(cliente: ClienteModel) {
     swal({
-      title: "¿Está seguro que desea eliminar el registro?",
+      title: '¿Está seguro que desea eliminar el registro?',
       text: `Está acción eliminara al cliente ${cliente.nombre} ${cliente.apellido}`,
-      icon: "warning",
-      buttons: ["Cancelar", "Aceptar"],
+      icon: 'warning',
+      buttons: ['Cancelar', 'Aceptar'],
       dangerMode: true,
     }).then((result: boolean) => {
       if (result) {
-        this.clienteService.delete(cliente.id).subscribe(res => {
+        this.clienteService.delete(cliente.id).subscribe((res) => {
           this.getClientes();
-          swal('Cliente eliminado', 'El cliente se eliminó con éxito.', 'success');
+          swal(
+            'Cliente eliminado',
+            'El cliente se eliminó con éxito.',
+            'success'
+          );
         });
       }
     });
   }
-
 }

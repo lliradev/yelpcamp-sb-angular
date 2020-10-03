@@ -7,16 +7,8 @@ import { ClienteService } from './cliente.service';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [
-    ClienteListComponent,
-    ClienteFormComponent
-  ],
-  imports: [
-    SharedModule,
-    ClienteRouting,
-  ],
-  providers: [
-    ClienteService
-  ]
+  declarations: [ClienteListComponent, ClienteFormComponent],
+  imports: [SharedModule, ClienteRouting],
+  providers: [ClienteService],
 })
-export class ClienteModule { }
+export class ClienteModule {}

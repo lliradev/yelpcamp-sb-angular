@@ -5,12 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClienteService {
-  readonly url = `${environment.apiBaseUrl}/clientes`;
+  private readonly url = `${environment.apiBaseUrl}/clientes`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Método para obtener el listado de los registros
@@ -22,7 +22,7 @@ export class ClienteService {
 
   /**
    * Método para obtener un registro en especifico
-   * 
+   *
    * @param id identificador único del registro
    */
   public findById(id: number): Observable<ClienteModel> {
@@ -31,7 +31,7 @@ export class ClienteService {
 
   /**
    * Método para crear un registro
-   * 
+   *
    * @param cliente objeto que se va a crear
    */
   public create(cliente: ClienteModel): Observable<ClienteModel> {
@@ -40,7 +40,7 @@ export class ClienteService {
 
   /**
    * Método para editar un registro
-   * 
+   *
    * @param cliente objeto que se va a editar
    */
   public update(cliente: ClienteModel): Observable<ClienteModel> {
@@ -49,7 +49,7 @@ export class ClienteService {
 
   /**
    * Método para eliminar un registro en especifico
-   * 
+   *
    * @param id identificador único del registro
    */
   public delete(id: number): Observable<ClienteModel> {

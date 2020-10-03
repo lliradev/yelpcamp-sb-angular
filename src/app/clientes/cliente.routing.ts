@@ -6,20 +6,20 @@ import { ClienteFormComponent } from './cliente-form/cliente-form.component';
 const routes: Routes = [
   {
     path: '',
-    component: ClienteListComponent
+    component: ClienteListComponent,
   },
   {
     path: 'create',
-    component: ClienteFormComponent
+    component: ClienteFormComponent,
   },
   {
     path: 'edit/:id',
-    component: ClienteFormComponent
-  }
+    component: ClienteFormComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ClienteRouting { }
+export class ClienteRouting {}
