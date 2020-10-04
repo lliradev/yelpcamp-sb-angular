@@ -1,11 +1,23 @@
 <div class="card mt-3">
-  <div class="card-header">Lista de clientes</div>
+  <div class="card-header">
+    Lista de clientes
+    <a routerLink="/clientes/create" class="btn btn-primary btn-sm float-right">Nuevo</a>
+    <a href="javascript: void(0)" class="btn btn-outline-success btn-sm float-right mr-1">
+      <i class="fas fa-file-excel"></i>
+    </a>
+    <a href="javascript: void(0)" class="btn btn-outline-danger btn-sm float-right mr-1">
+      <i class="fas fa-file-pdf"></i>
+    </a>
+  </div>
   <div class="card-body">
-    <a routerLink="/clientes/create" class="btn btn-primary mb-3 float-right">Nuevo</a>
-    <div class="table-responsive">
+    <div class="progress mb-1" *ngIf="isLoading">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+        aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+    </div>
+    <div *ngIf="clientes.length > 0 && !isLoading" class="table-responsive">
       <table class="table table-bordered">
         <thead>
-          <tr>
+          <tr class="table-active">
             <th>Id</th>
             <th>Nombre</th>
             <th>Apellido</th>
@@ -21,17 +33,24 @@
             <td>{{ cliente.apellido }}</td>
             <td>{{ cliente.email }}</td>
             <td>{{ cliente.createdAt }}</td>
-            <td>
-              <a [routerLink]="[ '/clientes/edit', cliente.id ]" class="btn btn-primary mr-2">
+            <td class="d-flex justify-content-center">
+              <a [routerLink]="[ '/clientes/edit', cliente.id ]" class="btn btn-primary btn-sm mr-1">
                 <i class="far fa-edit"></i>
               </a>
-              <a href="javascript: void(0)" (click)="deleteCliente(cliente)" class="btn btn-danger">
+              <a href="javascript: void(0)" (click)="deleteCliente(cliente)" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash"></i>
               </a>
             </td>
           </tr>
         </tbody>
       </table>
+      <!-- Paginación -->
+      <app-paginator *ngIf="paginator" [paginator]="paginator" [params]="params" (reload)="getClientes()">
+      </app-paginator>
+    </div>
+    <!-- No hay datos -->
+    <div class="text-center" *ngIf="clientes.length <= 0 && !isLoading">
+      No hay registros todavía
     </div>
   </div>
 </div>

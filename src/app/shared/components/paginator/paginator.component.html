@@ -1,0 +1,28 @@
+<div>
+  <div class="form-group">
+    <select class="custom-select">
+      <option selected="">Elementos por página</option>
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="15">15</option>
+      <option value="30">30</option>
+      <option value="999999">Todos</option>
+    </select>
+  </div>
+
+  <ul *ngIf="pages?.length > 0" class="pagination pagination-sm">
+
+    <li class="page-item" *ngIf="!paginator.first">
+      <a class="page-link" href="javascript: void(0)" (click)="prev($event)">&laquo;</a>
+    </li>
+
+    <li *ngFor="let page of pages; let i = index" class="page-item" [ngClass]="{'page-item active': i == params.page}">
+      <a class="page-link" href="javascript: void(0)" (click)="setPage(i, $event)">{{ i + 1 }}</a>
+    </li>
+
+    <li class="page-item" *ngIf="!paginator.last">
+      <a class="page-link" href="javascript: void(0)" (click)="next($event)">&raquo;</a>
+    </li>
+
+  </ul>
+</div>

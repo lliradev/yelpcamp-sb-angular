@@ -17,7 +17,14 @@ export class SwalService {
 
   public warning() {}
 
-  public error() {}
+  /**
+   * Método para mostrar una alerta de error
+   * @param title título de la alerta
+   * @param error error que envía el servidor
+   */
+  public error(title: string | any, error: any) {
+    Swal.fire(title, error, 'error');
+  }
 
   /**
    * Método para confirmar la eliminación de un registro
@@ -38,6 +45,7 @@ export class SwalService {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
+      reverseButtons: true,
     });
   }
 }

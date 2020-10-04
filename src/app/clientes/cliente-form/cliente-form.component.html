@@ -1,40 +1,50 @@
 <div class="card mt-3">
   <div class="card-header">Nuevo cliente</div>
-  <form [formGroup]="clienteForm" (ngSubmit)="saveOrUpdate()">
-    <div class="card-body">
-      <div class="form-group row has-danger">
-        <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
-        <div class="col-sm-6">
-          <input type="text" class="form-control" formControlName="nombre" [(ngModel)]="cliente.nombre" required>
-          <div class="text-danger" *ngIf="checkField('nombre')">
-            {{ baseFormValidation.errorMessage }}
+  <!-- <ul *ngIf="errors?.length > 0" class="alert alert-dismissible alert-danger">
+    <li *ngFor="let error of errors" class="text-white">
+      {{ error }}
+    </li>
+  </ul> -->
+  <div class="progress mt-2 mb-2 ml-2 mr-2" *ngIf="isLoading">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+      aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+  </div>
+  <div *ngIf="!isLoading">
+    <form [formGroup]="clienteForm" (ngSubmit)="saveOrUpdate()">
+      <div class="card-body">
+        <div class="form-group row has-danger">
+          <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" formControlName="nombre" [(ngModel)]="cliente.nombre" required>
+            <div class="text-danger" *ngIf="checkField('nombre')">
+              {{ baseFormValidation.errorMessage }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" formControlName="apellido" [(ngModel)]="cliente.apellido">
+            <div class="text-danger" *ngIf="checkField('apellido')">
+              {{ baseFormValidation.errorMessage }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-form-label col-sm-2">Correo electrónico</label>
+          <div class="col-sm-6">
+            <input type="email" class="form-control" formControlName="email" [(ngModel)]="cliente.email">
+            <div class="text-danger" *ngIf="checkField('email')">
+              {{ baseFormValidation.errorMessage }}
+            </div>
           </div>
         </div>
       </div>
-      <div class="form-group row">
-        <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
-        <div class="col-sm-6">
-          <input type="text" class="form-control" formControlName="apellido" [(ngModel)]="cliente.apellido">
-          <div class="text-danger" *ngIf="checkField('apellido')">
-            {{ baseFormValidation.errorMessage }}
-          </div>
-        </div>
+      <div class="card-footer">
+        <button class="btn btn-primary mr-2">Guardar</button>
+        <a routerLink="/clientes" class="btn btn-danger">Cancelar</a>
       </div>
-      <div class="form-group row">
-        <label for="email" class="col-form-label col-sm-2">Correo electrónico</label>
-        <div class="col-sm-6">
-          <input type="email" class="form-control" formControlName="email" [(ngModel)]="cliente.email">
-          <div class="text-danger" *ngIf="checkField('email')">
-            {{ baseFormValidation.errorMessage }}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card-footer">
-      <button class="btn btn-primary mr-2">Guardar</button>
-      <a routerLink="/clientes" class="btn btn-danger">Cancelar</a>
-    </div>
-  </form>
-
-  <pre>{{ cliente | json }}</pre>
+    </form>
+    <pre>{{ cliente | json }}</pre>
+  </div>
 </div>
