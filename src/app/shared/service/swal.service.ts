@@ -15,10 +15,13 @@ export class SwalService {
 
   public info() {}
 
-  public warning() {}
+  public warning(title: string, message: string) {
+    Swal.fire(title, message, 'warning');
+  }
 
   /**
    * Método para mostrar una alerta de error
+   *
    * @param title título de la alerta
    * @param error error que envía el servidor
    */

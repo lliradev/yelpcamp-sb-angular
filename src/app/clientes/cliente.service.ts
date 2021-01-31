@@ -1,12 +1,11 @@
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ClienteModel } from './cliente.model';
-import { Observable, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { catchError, map } from 'rxjs/operators';
-import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
-import { SwalService } from '../shared/service/swal.service';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { SwalService } from '@shared/service/swal.service';
+import { ClienteModel } from './cliente.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +24,8 @@ export class ClienteService {
    * @param params parámetros para filtrar la información
    */
   public findAll(params?: any): Observable<any> {
-    return this.http.get(`${this.url}/paginated`, { params }).pipe(
+    return this.http.get(this.url, { params });
+    /* .pipe(
       map((res: any) => {
         (res.content as ClienteModel[]).map((x) => {
           x.createdAt = formatDate(x.createdAt, 'dd/MM/yyyy', 'en-MX');
@@ -33,7 +33,7 @@ export class ClienteService {
         });
         return res;
       })
-    );
+    ); */
   }
 
   /**
@@ -60,7 +60,7 @@ export class ClienteService {
   public insert(cliente: ClienteModel): Observable<ClienteModel> {
     return this.http.post<ClienteModel>(this.url, cliente).pipe(
       catchError((e) => {
-        if (e.status == 400) {
+        if (e.status === 400) {
           return throwError(e);
         }
         console.error('Error aquí => ', e.error.message);
@@ -80,7 +80,7 @@ export class ClienteService {
       .put<ClienteModel>(`${this.url}/${cliente.id}`, cliente)
       .pipe(
         catchError((e) => {
-          if (e.status == 400) {
+          if (e.status === 400) {
             return throwError(e);
           }
           console.error('Error aquí => ', e.error.message);
@@ -103,5 +103,15 @@ export class ClienteService {
         return throwError(e);
       })
     );
+  }
+
+  public upload(image: File, id: number): Observable<HttpEvent<{}>> {
+    const fd = new FormData();
+    fd.append('image', image);
+    fd.append('id', id.toString());
+    return this.http.post(`${this.url}/upload`, fd, {
+      reportProgress: true,
+      observe: 'events',
+    });
   }
 }

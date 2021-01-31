@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ClienteService } from '../cliente.service';
 import { Title } from '@angular/platform-browser';
+import { ModalService } from '@shared/service/modal.service';
+import { SwalService } from '@shared/service/swal.service';
+import { Util } from '@shared/util/util';
 import { ClienteModel } from '../cliente.model';
-import { SwalService } from 'src/app/shared/service/swal.service';
+import { ClienteService } from '../cliente.service';
 
 @Component({
   selector: 'app-cliente-list',
@@ -11,6 +13,7 @@ import { SwalService } from 'src/app/shared/service/swal.service';
 })
 export class ClienteListComponent implements OnInit {
   public clientes: ClienteModel[] = [];
+  public cliente: ClienteModel;
   public isLoading = false;
   public paginator: any;
   public params: any = {
@@ -21,9 +24,10 @@ export class ClienteListComponent implements OnInit {
   };
 
   constructor(
-    private titleService: Title,
+    titleService: Title,
     private clienteService: ClienteService,
-    private swalService: SwalService
+    private swalService: SwalService,
+    private modalService: ModalService
   ) {
     titleService.setTitle('Lista de Clientes');
   }
@@ -63,5 +67,11 @@ export class ClienteListComponent implements OnInit {
         );
       });
     }
+  }
+
+  public openModal(cliente: ClienteModel) {
+    const obj = Util.cloneObject(cliente);
+    this.cliente = obj;
+    this.modalService.openModal();
   }
 }

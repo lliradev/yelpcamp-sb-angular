@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ClienteListComponent } from './cliente-list/cliente-list.component';
 import { ClienteFormComponent } from './cliente-form/cliente-form.component';
+import { ClienteDetailComponent } from './cliente-detail/cliente-detail.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: ClienteFormComponent,
+  },
+  {
+    path: 'detail/:id',
+    component: ClienteDetailComponent,
   },
 ];
 

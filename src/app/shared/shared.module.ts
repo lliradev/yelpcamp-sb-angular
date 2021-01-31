@@ -7,8 +7,8 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import localeES from '@angular/common/locales/es-MX';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import localeES from '@angular/common/locales/es-MX';
 
 registerLocaleData(localeES, 'es-MX');
 

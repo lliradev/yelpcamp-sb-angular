@@ -7,6 +7,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+// TODO: Falta documentación
 @Injectable({ providedIn: 'root' })
 export class BaseFormValidation {
   public errorMessage: string;

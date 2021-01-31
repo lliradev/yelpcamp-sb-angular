@@ -18,9 +18,7 @@
       <table class="table table-bordered">
         <thead>
           <tr class="table-active">
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
+            <th>Nombre completo</th>
             <th>Correo electrónico</th>
             <th>Fecha de creación</th>
             <th>Acciones</th>
@@ -28,15 +26,16 @@
         </thead>
         <tbody>
           <tr *ngFor="let cliente of clientes">
-            <td>{{ cliente.id }}</td>
-            <td>{{ cliente.nombre }}</td>
-            <td>{{ cliente.apellido }}</td>
+            <td>{{ cliente.nombreCompleto }}</td>
             <td>{{ cliente.email }}</td>
             <td>{{ cliente.createdAt }}</td>
             <td class="d-flex justify-content-center">
-              <a [routerLink]="[ '/clientes/edit', cliente.id ]" class="btn btn-primary btn-sm mr-1">
+              <a [routerLink]="['/clientes/edit', cliente.id]" class="btn btn-primary btn-sm mr-1">
                 <i class="far fa-edit"></i>
               </a>
+              <button (click)="openModal(cliente)" class="btn btn-success btn-sm mr-1">
+                <i class="far fa-eye"></i>
+              </button>
               <a href="javascript: void(0)" (click)="deleteCliente(cliente)" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash"></i>
               </a>
@@ -54,3 +53,5 @@
     </div>
   </div>
 </div>
+
+<app-cliente-detail *ngIf="cliente" [cliente]="cliente"></app-cliente-detail>
