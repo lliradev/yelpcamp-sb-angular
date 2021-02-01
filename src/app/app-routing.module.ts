@@ -8,6 +8,11 @@ const routes: Routes = [
       import('./clientes/cliente.module').then((m) => m.ClienteModule),
   },
   {
+    path: 'modal',
+    loadChildren: () =>
+      import('./modal/modal.module').then((m) => m.ModalModule),
+  },
+  {
     path: '',
     redirectTo: '/clientes',
     pathMatch: 'full',

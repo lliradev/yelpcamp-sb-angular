@@ -4,18 +4,20 @@
  * @author Luis Lira <llira34>
  * @version 1.0
  */
-import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { PaginatorComponent } from './components/paginator/paginator.component';
 import localeES from '@angular/common/locales/es-MX';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PaginatorComponent } from './components/paginator/paginator.component';
+import { ModalService } from './service/modal.service';
 
 registerLocaleData(localeES, 'es-MX');
 
 @NgModule({
   declarations: [PaginatorComponent],
-  imports: [CommonModule, ReactiveFormsModule],
-  exports: [CommonModule, ReactiveFormsModule, PaginatorComponent],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-MX' }],
+  imports: [CommonModule, ReactiveFormsModule, NgbModule],
+  exports: [CommonModule, ReactiveFormsModule, NgbModule, PaginatorComponent],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-MX' }, ModalService],
 })
 export class SharedModule {}
