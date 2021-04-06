@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ModalService } from '@shared/service/modal.service';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalService } from '@shared/service/swal.service';
 import { Util } from '@shared/util/util';
+import { ClienteDetailComponent } from '../cliente-detail/cliente-detail.component';
 import { ClienteModel } from '../cliente.model';
 import { ClienteService } from '../cliente.service';
 
@@ -27,7 +28,7 @@ export class ClienteListComponent implements OnInit {
     titleService: Title,
     private clienteService: ClienteService,
     private swalService: SwalService,
-    private modalService: ModalService
+    private modal: NgbModal
   ) {
     titleService.setTitle('Lista de Clientes');
   }
@@ -71,7 +72,10 @@ export class ClienteListComponent implements OnInit {
 
   public openModal(cliente: ClienteModel) {
     const obj = Util.cloneObject(cliente);
-    this.cliente = obj;
-    this.modalService.openModal();
+    const options: NgbModalOptions = {
+      size: 'xl',
+    };
+    const res = this.modal.open(ClienteDetailComponent, options);
+    res.componentInstance.cliente = obj;
   }
 }

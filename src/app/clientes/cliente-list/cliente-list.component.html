@@ -54,4 +54,4 @@
   </div>
 </div>
 
-<app-cliente-detail *ngIf="cliente" [cliente]="cliente"></app-cliente-detail>
+<app-cliente-detail *ngIf="cliente" [cliente]="cliente" (reload)="getClientes()"></app-cliente-detail>

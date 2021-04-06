@@ -1,8 +1,7 @@
 import { HttpEventType } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICustomEvent } from '@shared/model/custom-event.model';
-import { ModalService } from '@shared/service/modal.service';
 import { SwalService } from '@shared/service/swal.service';
 import { ClienteModel } from '../cliente.model';
 import { ClienteService } from '../cliente.service';
@@ -14,18 +13,16 @@ import { ClienteService } from '../cliente.service';
 })
 export class ClienteDetailComponent implements OnInit {
   @Input() public cliente: ClienteModel;
+  @Output() reload = new EventEmitter();
   public isLoading = false;
   public progress = 0;
   private thumbnail: File;
 
   constructor(
-    title: Title,
     private clienteService: ClienteService,
     private swalService: SwalService,
-    public modalService: ModalService
-  ) {
-    title.setTitle('Detalle del cliente');
-  }
+    private activeModal: NgbActiveModal
+  ) {}
 
   ngOnInit() {}
 
@@ -57,6 +54,7 @@ export class ClienteDetailComponent implements OnInit {
           } else if (event.type === HttpEventType.Response) {
             const response: any = event.body;
             this.cliente = response.cliente as ClienteModel;
+            this.reload.emit();
             this.swalService.success(
               'Foto',
               'La foto del cliente se ha subido con éxito.'
@@ -72,9 +70,15 @@ export class ClienteDetailComponent implements OnInit {
     }
   }
 
-  public closeModal() {
-    this.modalService.closeModal();
+  public dismiss(action: string) {
+    this.activeModal.dismiss(action);
+    this.reload.emit();
+  }
+
+  public close(action: string) {
+    this.activeModal.close(action);
     this.thumbnail = null;
     this.progress = 0;
+    this.reload.emit();
   }
 }
