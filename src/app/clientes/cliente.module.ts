@@ -8,7 +8,11 @@ import { SharedModule } from '@shared/shared.module';
 import { ClienteDetailComponent } from './cliente-detail/cliente-detail.component';
 
 @NgModule({
-  declarations: [ClienteListComponent, ClienteFormComponent, ClienteDetailComponent],
+  declarations: [
+    ClienteListComponent,
+    ClienteFormComponent,
+    ClienteDetailComponent,
+  ],
   imports: [SharedModule, ClienteRouting],
   providers: [ClienteService],
 })

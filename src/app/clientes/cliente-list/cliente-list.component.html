@@ -27,8 +27,8 @@
         <tbody>
           <tr *ngFor="let cliente of clientes">
             <td>{{ cliente.nombreCompleto }}</td>
-            <td>{{ cliente.email }}</td>
-            <td>{{ cliente.createdAt }}</td>
+            <td>{{ cliente.correo }}</td>
+            <td>{{ cliente.fechaCreacion }}</td>
             <td class="d-flex justify-content-center">
               <a [routerLink]="['/clientes/edit', cliente.id]" class="btn btn-primary btn-sm mr-1">
                 <i class="far fa-edit"></i>

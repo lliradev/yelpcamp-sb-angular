@@ -1,6 +1,5 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { ICustomEvent } from '@shared/model/custom-event.model';
 import { ModalService } from '@shared/service/modal.service';
 import { SwalService } from '@shared/service/swal.service';
@@ -19,13 +18,10 @@ export class ClienteDetailComponent implements OnInit {
   private thumbnail: File;
 
   constructor(
-    title: Title,
     private clienteService: ClienteService,
     private swalService: SwalService,
     public modalService: ModalService
-  ) {
-    title.setTitle('Detalle del cliente');
-  }
+  ) {}
 
   ngOnInit() {}
 
@@ -49,8 +45,9 @@ export class ClienteDetailComponent implements OnInit {
       );
     } else {
       this.isLoading = true;
-      this.clienteService.upload(this.thumbnail, this.cliente.id).subscribe(
-        (event) => {
+      this.clienteService
+        .upload(this.thumbnail, this.cliente.id)
+        .then((event) => {
           this.isLoading = false;
           if (event.type === HttpEventType.UploadProgress) {
             this.progress = Math.round((event.loaded / event.total) * 100);
@@ -62,13 +59,12 @@ export class ClienteDetailComponent implements OnInit {
               'La foto del cliente se ha subido con éxito.'
             );
           }
-        },
-        (err) => {
+        })
+        .catch((err) => {
           this.isLoading = false;
           console.error(err);
           this.swalService.error('Ocurrio un error', err.error.message);
-        }
-      );
+        });
     }
   }
 

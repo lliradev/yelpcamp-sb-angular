@@ -24,12 +24,12 @@ export class ClienteListComponent implements OnInit {
   };
 
   constructor(
-    titleService: Title,
+    private titleService: Title,
     private clienteService: ClienteService,
     private swalService: SwalService,
     private modalService: ModalService
   ) {
-    titleService.setTitle('Lista de Clientes');
+    this.titleService.setTitle('Lista de Clientes');
   }
 
   ngOnInit() {
@@ -38,34 +38,38 @@ export class ClienteListComponent implements OnInit {
 
   private getClientes() {
     this.isLoading = true;
-    this.clienteService.findAll(this.params).subscribe(
-      (res) => {
+    this.clienteService
+      .findAll(this.params)
+      .then((res) => {
         this.isLoading = false;
         this.clientes = res.content as ClienteModel[];
         this.paginator = res;
-      },
-      (err) => {
+      })
+      .catch((err) => {
         this.isLoading = false;
         console.error(err);
-      }
-    );
+        this.swalService.error('Ocurrió un error', err.message);
+      });
   }
 
   public async deleteCliente(cliente: ClienteModel) {
-    const result = await this.swalService.confirm(
-      '¿Está seguro que desea eliminar el registro?',
-      `Está acción eliminara al cliente ${cliente.nombre.toUpperCase()} ${cliente.apellido.toUpperCase()}`
-    );
-    if (result.isConfirmed) {
-      this.isLoading = true;
-      this.clienteService.delete(cliente.id).subscribe(() => {
+    try {
+      const result = await this.swalService.confirm(
+        '¿Está seguro que desea eliminar el registro?',
+        `Está acción eliminara al cliente ${cliente.nombreCompleto.toUpperCase()}`
+      );
+      if (result.isConfirmed) {
+        this.isLoading = true;
+        await this.clienteService.delete(cliente.id);
         this.isLoading = false;
         this.getClientes();
         this.swalService.success(
           'Cliente eliminado',
           'El cliente se eliminó con éxito.'
         );
-      });
+      }
+    } catch (err) {
+      this.swalService.error('Ocurrió un error', err.message);
     }
   }
 

@@ -15,11 +15,13 @@ export class PaginatorComponent implements OnInit {
     shape: 'desc',
   };
   public pages: number[];
+  public totalElements: number;
 
   constructor() {}
 
   ngOnInit() {
     this.pages = new Array(this.paginator.totalPages);
+    this.totalElements = this.paginator.totalElements;
   }
 
   /**
@@ -53,6 +55,16 @@ export class PaginatorComponent implements OnInit {
   public next(event: any) {
     event.preventDefault();
     this.params.page = this.params.page + 1;
+    this.reload.emit();
+  }
+
+  /**
+   * Método para cambiar el límite
+   *
+   * @param value <string>
+   */
+  public onChangeLimit(value: string) {
+    this.params.limit = +value;
     this.reload.emit();
   }
 }
