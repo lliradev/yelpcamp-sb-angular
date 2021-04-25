@@ -21,7 +21,7 @@ export class ClienteFormComponent implements OnInit {
   public errors: string[];
 
   constructor(
-    titleService: Title,
+    private titleService: Title,
     private clienteService: ClienteService,
     private fb: FormBuilder,
     private router: Router,
@@ -29,13 +29,14 @@ export class ClienteFormComponent implements OnInit {
     private swalService: SwalService,
     public baseFormValidation: BaseFormValidation
   ) {
-    titleService.setTitle('Detalle del cliente');
+    this.titleService.setTitle('Detalle del cliente');
   }
 
   ngOnInit() {
     this.clienteForm = this.fb.group({
       nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
+      apellidoPaterno: ['', Validators.required],
+      apellidoMaterno: ['', Validators.required],
       email: [
         '',
         Validators.compose([
@@ -61,8 +62,9 @@ export class ClienteFormComponent implements OnInit {
 
   private save() {
     this.isLoading = true;
-    this.clienteService.insert(this.cliente).subscribe(
-      () => {
+    this.clienteService
+      .insert(this.cliente)
+      .then(() => {
         this.isLoading = false;
         this.clienteForm.reset();
         this.router.navigate(['/clientes']);
@@ -70,19 +72,18 @@ export class ClienteFormComponent implements OnInit {
           'Cliente nuevo',
           'El cliente se creó con éxito.'
         );
-      },
-      (err) => {
+      })
+      .catch((err) => {
         this.isLoading = false;
         this.swalService.error('Ocurrio un error', err.error.message);
-        // this.errors = err.error.errors as string[];
-      }
-    );
+      });
   }
 
   private update() {
     this.isLoading = true;
-    this.clienteService.update(this.cliente).subscribe(
-      () => {
+    this.clienteService
+      .update(this.cliente)
+      .then(() => {
         this.isLoading = false;
         this.clienteForm.reset();
         this.router.navigate(['/clientes']);
@@ -90,31 +91,30 @@ export class ClienteFormComponent implements OnInit {
           'Cliente actualizado',
           'El cliente se actualizó con éxito.'
         );
-      },
-      (err) => {
+      })
+      .catch((err) => {
         this.isLoading = false;
         this.swalService.error('Ocurrio un error', err.error.message);
-        // this.errors = err.error.errors as string[];
-      }
-    );
+      });
   }
 
   private setClienteToForm() {
+    // tslint:disable-next-line: deprecation
     this.route.params.subscribe((params) => {
       const id = params.id;
       if (id) {
         this.isLoading = true;
-        this.clienteService.findById(id).subscribe(
-          (cliente) => {
+        this.clienteService
+          .findById(id)
+          .then((cliente) => {
             const obj = Util.cloneObject(cliente);
             this.isLoading = false;
             this.cliente = obj;
-          },
-          (err) => {
+          })
+          .catch((err) => {
             this.isLoading = false;
             console.error(err);
-          }
-        );
+          });
       }
     });
   }

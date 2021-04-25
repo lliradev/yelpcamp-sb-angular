@@ -22,10 +22,21 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
+          <label for="apellidoPaterno" class="col-form-label col-sm-2">Apellido Paterno</label>
           <div class="col-sm-6">
-            <input type="text" class="form-control" formControlName="apellido" [(ngModel)]="cliente.apellido">
-            <div class="text-danger" *ngIf="checkField('apellido')">
+            <input type="text" class="form-control" formControlName="apellidoPaterno"
+              [(ngModel)]="cliente.apellidoPaterno">
+            <div class="text-danger" *ngIf="checkField('apellidoPaterno')">
+              {{ baseFormValidation.errorMessage }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="apellidoMaterno" class="col-form-label col-sm-2">Apellido Paterno</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" formControlName="apellidoMaterno"
+              [(ngModel)]="cliente.apellidoMaterno">
+            <div class="text-danger" *ngIf="checkField('apellidoMaterno')">
               {{ baseFormValidation.errorMessage }}
             </div>
           </div>
@@ -33,7 +44,7 @@
         <div class="form-group row">
           <label for="email" class="col-form-label col-sm-2">Correo electrónico</label>
           <div class="col-sm-6">
-            <input type="email" class="form-control" formControlName="email" [(ngModel)]="cliente.email">
+            <input type="email" class="form-control" formControlName="email" [(ngModel)]="cliente.correo">
             <div class="text-danger" *ngIf="checkField('email')">
               {{ baseFormValidation.errorMessage }}
             </div>

@@ -46,8 +46,9 @@ export class ClienteDetailComponent implements OnInit {
       );
     } else {
       this.isLoading = true;
-      this.clienteService.upload(this.thumbnail, this.cliente.id).subscribe(
-        (event) => {
+      this.clienteService
+        .upload(this.thumbnail, this.cliente.id)
+        .then((event) => {
           this.isLoading = false;
           if (event.type === HttpEventType.UploadProgress) {
             this.progress = Math.round((event.loaded / event.total) * 100);
@@ -60,13 +61,12 @@ export class ClienteDetailComponent implements OnInit {
               'La foto del cliente se ha subido con éxito.'
             );
           }
-        },
-        (err) => {
+        })
+        .catch((err) => {
           this.isLoading = false;
           console.error(err);
           this.swalService.error('Ocurrio un error', err.error.message);
-        }
-      );
+        });
     }
   }
 
