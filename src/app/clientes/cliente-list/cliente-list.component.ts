@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalService } from '@shared/service/swal.service';
@@ -17,6 +18,7 @@ export class ClienteListComponent implements OnInit {
   public cliente: ClienteModel;
   public isLoading = false;
   public paginator: any;
+  public filter = new FormControl('');
   public params: any = {
     page: 0,
     limit: 5,

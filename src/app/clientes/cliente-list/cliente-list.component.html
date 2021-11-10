@@ -15,6 +15,13 @@
         aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
     </div>
     <div *ngIf="clientes.length > 0 && !isLoading" class="table-responsive">
+      <!-- Aplicar filtro -->
+      <form>
+        <div class="form-group form-inline">
+          Filtrar por: <input class="form-control ml-2" type="text" [formControl]="filter" />
+        </div>
+      </form>
+      <!-- Tabla -->
       <table class="table table-bordered">
         <thead>
           <tr class="table-active">
@@ -26,9 +33,18 @@
         </thead>
         <tbody>
           <tr *ngFor="let cliente of clientes">
-            <td>{{ cliente.nombreCompleto }}</td>
-            <td>{{ cliente.correo }}</td>
-            <td>{{ cliente.fechaCreacion }}</td>
+            <td>
+              <!-- {{ cliente.nombreCompleto }} -->
+              <ngb-highlight [result]="cliente.nombreCompleto" [term]="filter.value"></ngb-highlight>
+            </td>
+            <td>
+              <!-- {{ cliente.correo }} -->
+              <ngb-highlight [result]="cliente.correo" [term]="filter.value"></ngb-highlight>
+            </td>
+            <td>
+              <!-- {{ cliente.fechaCreacion }} -->
+              <ngb-highlight [result]="cliente.fechaCreacion" [term]="filter.value"></ngb-highlight>
+            </td>
             <td class="d-flex justify-content-center">
               <a [routerLink]="['/clientes/edit', cliente.id]" class="btn btn-primary btn-sm mr-1">
                 <i class="far fa-edit"></i>
